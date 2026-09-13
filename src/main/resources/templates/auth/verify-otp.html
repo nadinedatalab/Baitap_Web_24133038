@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/layout :: layout(~{::title}, ~{::section})}">
+<head>
+    <title>Xác Thực OTP - NexusShop</title>
+</head>
+<body>
+<section class="d-flex justify-content-center align-items-center" style="min-height: 60vh;">
+    <div class="glass-card p-5" style="width: 100%; max-width: 450px;">
+        <h2 class="text-center mb-4 fw-bold">Verify Your Email</h2>
+        <p class="text-center text-muted mb-4">We've sent a 6-digit OTP to your email address.</p>
+        
+        <div th:if="${message}" class="alert alert-success" th:text="${message}"></div>
+        <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+        
+        <form th:action="@{/verify-otp}" method="post">
+            <div class="mb-3">
+                <label class="form-label">Email Address</label>
+                <input type="email" name="email" class="form-control" th:value="${email}" required readonly>
+            </div>
+            <div class="mb-4">
+                <label class="form-label">6-Digit OTP</label>
+                <input type="text" name="otp" class="form-control text-center fs-4 tracking-widest" required placeholder="------" maxlength="6">
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Verify Account</button>
+        </form>
+    </div>
+</section>
+</body>
+</html>

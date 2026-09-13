@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org" xmlns:sitemesh="http://www.sitemesh.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><sitemesh:write property='title'/> - ML Jewelry</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --ml-dark: #3A0519;
+            --ml-hover: #670D2F;
+            --ml-accent: #612D53;
+            --ml-light: #F3F4F4;
+        }
+        body {
+            background-color: var(--ml-light);
+            color: var(--ml-dark);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .navbar-custom {
+            background-color: var(--ml-dark);
+        }
+        .navbar-custom .navbar-brand, .navbar-custom .nav-link {
+            color: var(--ml-light);
+        }
+        .navbar-custom .nav-link:hover {
+            color: var(--ml-light);
+            background-color: var(--ml-hover);
+            border-radius: 5px;
+        }
+        .btn-primary-custom {
+            background-color: var(--ml-dark);
+            border-color: var(--ml-dark);
+            color: var(--ml-light);
+        }
+        .btn-primary-custom:hover {
+            background-color: var(--ml-hover);
+            border-color: var(--ml-hover);
+            color: var(--ml-light);
+        }
+        .card-custom {
+            border: 1px solid var(--ml-accent);
+            box-shadow: 0 4px 8px rgba(97, 45, 83, 0.1);
+        }
+        .footer-custom {
+            background-color: var(--ml-dark);
+            color: var(--ml-light);
+            padding: 20px 0;
+            margin-top: 40px;
+        }
+        .profile-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--ml-light);
+        }
+    </style>
+    <sitemesh:write property='head'/>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-custom mb-4">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="/">💎 ML Jewelry</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon" style="filter: invert(1);"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item"><a class="nav-link" href="/">Trang chủ</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/products">Sản phẩm</a></li>
+                </ul>
+                <ul class="navbar-nav">
+                    <li class="nav-item" th:if="${session.user == null}"><a class="nav-link" href="/login">Đăng nhập</a></li>
+                    <li class="nav-item" th:if="${session.user == null}"><a class="nav-link" href="/register">Đăng ký</a></li>
+                    
+                    <li class="nav-item dropdown" th:if="${session.user != null}">
+                        <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown">
+                            <img th:if="${session.user.avatarUrl != null}" th:src="${session.user.avatarUrl}" class="profile-avatar me-2" alt="Avatar">
+                            <i th:unless="${session.user.avatarUrl != null}" class="fas fa-user-circle fs-4 me-2"></i>
+                            <span th:text="${session.user.fullName}">User</span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="/profile">Hồ sơ cá nhân</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="/logout">Đăng xuất</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container min-vh-100">
+        <!-- Flash messages -->
+        <div th:if="${message}" class="alert alert-success alert-dismissible fade show" role="alert">
+            <span th:text="${message}"></span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+        <div th:if="${error}" class="alert alert-danger alert-dismissible fade show" role="alert">
+            <span th:text="${error}"></span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+
+        <sitemesh:write property='body'/>
+    </div>
+
+    <footer class="footer-custom text-center">
+        <div class="container">
+            <p class="mb-0">© 2026 ML Jewelry. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

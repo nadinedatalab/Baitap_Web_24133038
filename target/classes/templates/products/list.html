@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Danh Sách Sản Phẩm</title>
+</head>
+<body>
+    <div class="row mb-4">
+        <div class="col-12">
+            <h2 class="border-bottom pb-2" style="color: var(--ml-hover);">Tất Cả Sản Phẩm</h2>
+        </div>
+    </div>
+
+    <div class="row row-cols-1 row-cols-md-3 g-4 mb-5">
+        <div class="col" th:each="product : ${products.content}">
+            <div class="card h-100 card-custom border-0 shadow-sm">
+                <img th:if="${product.imageUrl != null}" th:src="${product.imageUrl}" class="card-img-top p-3" alt="Product Image" style="height: 250px; object-fit: contain;">
+                <img th:unless="${product.imageUrl != null}" src="https://via.placeholder.com/250" class="card-img-top p-3" alt="Placeholder">
+                <div class="card-body">
+                    <h5 class="card-title text-truncate" th:text="${product.name}" style="color: var(--ml-dark);">Tên sản phẩm</h5>
+                    <p class="card-text fw-bold fs-5" style="color: var(--ml-hover);" th:text="${#numbers.formatDecimal(product.price, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'">Giá</p>
+                    <a th:href="@{/products/{id}(id=${product.id})}" class="btn btn-primary-custom w-100">Xem chi tiết</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Phân trang -->
+    <nav th:if="${products.totalPages > 1}" aria-label="Page navigation">
+        <ul class="pagination justify-content-center">
+            <li class="page-item" th:classappend="${products.first} ? 'disabled'">
+                <a class="page-link" th:href="@{/products(page=${products.number - 1})}" tabindex="-1" style="color: var(--ml-dark);">Trước</a>
+            </li>
+            <li class="page-item" th:each="pageNo : ${#numbers.sequence(0, products.totalPages - 1)}"
+                th:classappend="${products.number == pageNo} ? 'active'">
+                <a class="page-link" th:href="@{/products(page=${pageNo})}" th:text="${pageNo + 1}" style="background-color: var(--ml-dark); border-color: var(--ml-dark); color: var(--ml-light);" th:if="${products.number == pageNo}">1</a>
+                <a class="page-link" th:href="@{/products(page=${pageNo})}" th:text="${pageNo + 1}" style="color: var(--ml-dark);" th:unless="${products.number == pageNo}">1</a>
+            </li>
+            <li class="page-item" th:classappend="${products.last} ? 'disabled'">
+                <a class="page-link" th:href="@{/products(page=${products.number + 1})}" style="color: var(--ml-dark);">Tiếp</a>
+            </li>
+        </ul>
+    </nav>
+</body>
+</html>

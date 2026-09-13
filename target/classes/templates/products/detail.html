@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Chi Tiết Sản Phẩm</title>
+</head>
+<body>
+    <div class="card card-custom border-0 shadow p-4">
+        <div class="row">
+            <div class="col-md-5 text-center">
+                <img th:if="${product.imageUrl != null}" th:src="${product.imageUrl}" class="img-fluid rounded" alt="Product Image" style="max-height: 400px; object-fit: contain; border: 1px solid var(--ml-accent);">
+                <img th:unless="${product.imageUrl != null}" src="https://via.placeholder.com/400" class="img-fluid rounded" alt="Placeholder">
+            </div>
+            <div class="col-md-7">
+                <h2 class="mb-3" style="color: var(--ml-dark);" th:text="${product.name}">Tên sản phẩm</h2>
+                <div class="mb-3">
+                    <span class="badge" style="background-color: var(--ml-accent); font-size: 1rem;" th:text="${product.category != null ? product.category.name : 'Chưa phân loại'}">Danh mục</span>
+                </div>
+                <h3 class="fw-bold mb-4" style="color: var(--ml-hover);" th:text="${#numbers.formatDecimal(product.price, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'">Giá</h3>
+                
+                <h5 style="color: var(--ml-dark);">Mô tả sản phẩm:</h5>
+                <p class="text-muted" th:text="${product.description}">Mô tả chi tiết...</p>
+
+                <div class="mt-5">
+                    <button class="btn btn-primary-custom btn-lg me-2"><i class="fas fa-cart-plus"></i> Thêm vào giỏ hàng</button>
+                    <a href="/products" class="btn btn-outline-dark btn-lg" style="border-color: var(--ml-accent); color: var(--ml-accent);">Quay lại</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

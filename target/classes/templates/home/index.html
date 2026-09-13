@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Trang Chủ</title>
+</head>
+<body>
+    <div class="row">
+        <div class="col-12 text-center mb-5">
+            <h1 class="display-4 fw-bold" style="color: var(--ml-dark);">Chào mừng đến với ML Jewelry</h1>
+            <p class="lead" style="color: var(--ml-accent);">Khám phá bộ sưu tập trang sức cao cấp và tinh tế nhất dành riêng cho bạn.</p>
+        </div>
+    </div>
+    
+    <div class="row mb-4">
+        <div class="col-12">
+            <h2 class="border-bottom pb-2" style="color: var(--ml-hover);">Sản Phẩm Mới Nhất</h2>
+        </div>
+    </div>
+
+    <div class="row row-cols-1 row-cols-md-5 g-4">
+        <div class="col" th:each="product : ${products}">
+            <div class="card h-100 card-custom border-0 shadow-sm">
+                <img th:if="${product.imageUrl != null}" th:src="${product.imageUrl}" class="card-img-top p-3" alt="Product Image" style="height: 200px; object-fit: contain;">
+                <img th:unless="${product.imageUrl != null}" src="https://via.placeholder.com/200" class="card-img-top p-3" alt="Placeholder">
+                <div class="card-body text-center">
+                    <h5 class="card-title text-truncate" th:text="${product.name}" style="color: var(--ml-dark);">Tên sản phẩm</h5>
+                    <p class="card-text fw-bold" style="color: var(--ml-hover);" th:text="${#numbers.formatDecimal(product.price, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'">Giá</p>
+                    <a th:href="@{/product/{id}(id=${product.id})}" class="btn btn-outline-dark btn-sm w-100" style="border-color: var(--ml-accent); color: var(--ml-accent);">Xem chi tiết</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
